@@ -1,6 +1,6 @@
 from app import app
-from flask import render_template, request
-from models.items_list import items
+from flask import render_template, request, redirect
+from models.items_list import *
 from models.items import Items
 
 @app.route('/shoppinglist')
@@ -9,4 +9,10 @@ def index():
 
 @app.route('/shoppinglist', methods=['POST'])
 def add_item():
-    pass
+    name_of_item = request.form['name_of_item']
+    price = float(request.form['price'])
+    quantity = int(request.form['quantity'])
+    bought = True if 'bought' in request.form else False
+    new_item = Items(name_of_item, price, quantity, bought)
+    add_new_item(new_item)
+    return redirect ('/shoppinglist')
