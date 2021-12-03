@@ -11,8 +11,7 @@ def index():
 @app.route('/shoppinglist', methods=['POST'])
 def add_item():
     name_of_item = request.form['name_of_item']
-    input_price = float(request.form['price'])
-    price = "{:.2f}".format(input_price)
+    price = float(request.form['price'])
     quantity = int(request.form['quantity'])
     bought = True if 'bought' in request.form else False
     new_item = Items(name_of_item, price, quantity, bought)

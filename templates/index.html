@@ -19,7 +19,7 @@
 {% for item in items %}
 <div id='list-container'>
     <p>{{item.name_of_item}}
-        <br>Price: £{{item.price}}
+        <br>Price: £{{"{:.2f}".format(item.price)}}
         <br>Quantity: {{item.quantity}}
         <br>Bought?: {{item.bought}}
     </p>

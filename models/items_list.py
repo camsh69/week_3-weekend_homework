@@ -9,7 +9,7 @@ def add_new_item(item):
     items.append(item)
 
 def total_price(items):
-    total = 0
+    total = 0.0
     for item in items:
         total += item.price
     return "{:.2f}".format(total)
