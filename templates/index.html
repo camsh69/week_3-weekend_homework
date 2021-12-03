@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>My Shopping List</h1>
+
+<div id="form-container">
+    <form action="/shoppinglist" method="post">
+        <label for="name_of_item">Item Name: </label>
+        <input type="text" name="name_of_item" id="name_of_item">
+        <label for="price">Price: </label>
+        <input type="text" name="price" id="price">
+        <label for="quantity">Quantity:</label>
+        <input type="text" name="quantity" id="quantity">
+        <label for="bought">Bought? </label>
+        <input type="checkbox" name="bought" id="bought" value="False">
+    </form>
+</div>
+
+{% for item in items %}
+<div id='list-container'>
+    <p>{{item.name_of_item}}
+        <br>Price: £{{item.price}}
+        <br>Quantity: {{item.quantity}}
+        <br>Bought?: {{item.bought}}
+    </p>
+</div>
+{% endfor %}
+
+{% endblock  %}
