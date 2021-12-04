@@ -1,42 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>My Shopping List</h1>
+<h1 class="w3-container w3-teal" style="text-align: center;">My Shopping List</h1>
 
-<div id="form-container">
+<div id="form-container" class="w3-row-padding">
     <form action="/shoppinglist" method="post">
-        <label for="name_of_item">Item Name: </label>
-        <input type="text" name="name_of_item" id="name_of_item">
-        <label for="price">Price: </label>
-        <input type="number" step="0.01" name="price" id="price">
-        <label for="quantity">Quantity:</label>
-        <input type="number" name="quantity" id="quantity">
-        <label for="bought">Bought? </label>
-        <input type="checkbox" name="bought" id="bought" value="False">
-        <input type="submit" value="Add Item">
+        <div class="w3-half">
+            <label for="name_of_item">Item Name: </label>
+            <input class="w3-input w3-border w3-round-large w3-margin-bottom" type="text" name="name_of_item"
+                id="name_of_item" autofocus required>
+        </div>
+        <div class="w3-quarter">
+            <label for="price">Price: </label>
+            <input class="w3-input w3-border w3-round-large w3-margin-bottom" type="number" step="0.01" name="price"
+                id="price" required>
+        </div>
+        <div class="w3-quarter">
+            <label for="quantity">Quantity:</label>
+            <input class="w3-input w3-border w3-round-large w3-margin-bottom" type="number" name="quantity"
+                id="quantity" required>
+        </div>
+        <div class="margin-top">
+            <label for="bought">Bought? </label>
+            <input class="w3-check" type="checkbox" name="bought" id="bought" value="False">
+        </div>
+        <p>
+            <input class="w3-button w3-block w3-round-xxlarge w3-indigo w3-hover-green" type="submit" value="Add Item">
+        </p>
+    </form>
+    <hr>
+</div>
+
+<div id='totals-container' class="w3-container">
+    <div>
+        Total items: <b>{{ total_items }}</b>
+    </div>
+    <div class="w3-margin-bottom">
+        Total price: <b>£{{ total_price }}</b>
+    </div>
+</div>
+
+<div id='filter-container' class="w3-container w3-margin-bottom">
+    <form action="/shoppinglist" method="post">
+        <input class="w3-radio" type="radio" name="options" id="all" value="all" checked>
+        <label for="all">All</label>
+        <input class="w3-radio" type="radio" name="options" id="bought_only" value="bought_only">
+        <label for="bought_only">Bought Only</label>
+        <input class="w3-radio" type="radio" name="options" id="not_bought" value="not_bought">
+        <label for="not_bought">Not Bought</label>
+        <input class="w3-button w3-indigo w3-round-xxlarge w3-hover-green w3-margin-left" type="submit" value="Filter">
     </form>
 </div>
 
-{% for item in items %}
-<div id='list-container'>
-    <p>{{item.name_of_item}}
-        <br>Price: £{{"{:.2f}".format(item.price)}}
-        <br>Quantity: {{item.quantity}}
-        <br>Bought?: {{item.bought}}
-    </p>
+<div id="list-container" class="w3-container w3-row">
+    {% for item in items %}
+    <ul class="w3-ul w3-card-4 w3-round-xxlarge w3-col m2 l4 w3-animate-zoom" style="width:50%">
+        <li>
+            <header class="w3-container w3-blue w3-animate-zoom w3-round-xxlarge" >
+                <h3>{{item.name_of_item}}</h3>
+            </header>
+            <br>Price: £{{"{:.2f}".format(item.price)}}
+            <br>Quantity: {{item.quantity}}
+            {% if item.quantity >= 5 %}
+            <small><i style="color: red;">eligible for 10% discount</i></small>
+            {% endif %}
+            <br>Bought?:
+            {% if item.bought %}
+            <span>&#9989;</span>
+            {% else %}
+            <span>No</span>
+            {% endif %}
+        </li>
+    </ul>
+    {% endfor %}
 </div>
-{% endfor %}
-
-<div id='total_price-container'>
-    <p>
-        £{{ total_price }}
-    </p>
-</div>
-
-<div id='total_items-container'>
-    <p>
-        {{ total_items }}
-    </p>
-</div>
-
 
 {% endblock  %}

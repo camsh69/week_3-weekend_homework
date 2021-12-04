@@ -17,3 +17,4 @@ def add_item():
     new_item = Items(name_of_item, price, quantity, bought)
     add_new_item(new_item)
     return redirect ('/shoppinglist')
+

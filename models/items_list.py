@@ -11,8 +11,13 @@ def add_new_item(item):
 def total_price(items):
     total = 0.0
     for item in items:
-        total += item.price
+        total += (item.price * item.quantity)
+        if item.quantity >= 5:
+            total -= (item.price/10) * item.quantity
     return "{:.2f}".format(total)
 
 def total_items(items):
-    return len(items)
+    total = 0
+    for item in items:
+        total += item.quantity
+    return total
