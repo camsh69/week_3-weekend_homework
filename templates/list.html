@@ -5,7 +5,7 @@
 <br>Price: £{{"{:.2f}".format(item.price)}}
 <br>Quantity: {{item.quantity}}
 {% if item.quantity >= 5 %}
-<small><i style="color: red;">eligible for 10% discount</i></small>
+<span class="discount">10% discount</span>
 {% endif %}
 <br>Bought?:
 {% if item.bought %}

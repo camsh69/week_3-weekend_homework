@@ -23,8 +23,8 @@
             <input class="w3-check" type="checkbox" name="bought" id="bought" value="False">
         </div>
         <p>
-            <input class="w3-button w3-block w3-round-xxlarge w3-indigo w3-hover-green" style="width:50%; margin: auto;"
-                type="submit" value="Add Item">
+            <input class="w3-button w3-block w3-round-xxlarge w3-indigo w3-hover-green add_item_button" type="submit"
+                value="Add Item">
         </p>
     </form>
     <hr>
@@ -32,29 +32,23 @@
 
 <section id='totals-container' class="w3-container">
     <div>
-        Total items: <b>{{ total_items }}</b>
+        Total items: <span class="bold">{{ total_items }}</span>
     </div>
     <div class="w3-margin-bottom">
-        Total price: <b>£{{ total_price }}</b>
+        Total price: <span class="bold">£{{ total_price }}</span>
     </div>
 </section>
 
 <section id='filter-container' class="w3-container w3-margin-bottom">
     <form action="/shoppinglist" method="get">
         <input class="w3-radio" type="radio" name="option" id="all" value="all"
-        {% if request.args.get('option') == 'all' or None %}
-          checked  
-        {% endif %}>
+            {% if request.args.get('option') == 'all' or request.args.get('option') == None %} checked {% endif %}>
         <label for="all">All</label>
         <input class="w3-radio" type="radio" name="option" id="bought_only" value="bought_only"
-        {% if request.args.get('option') == 'bought_only' %}
-          checked  
-        {% endif %}>
+            {% if request.args.get('option') == 'bought_only' %} checked {% endif %}>
         <label for="bought_only">Bought Only</label>
         <input class="w3-radio" type="radio" name="option" id="not_bought" value="not_bought"
-        {% if request.args.get('option') == 'not_bought' %}
-          checked  
-        {% endif %}>
+            {% if request.args.get('option') == 'not_bought' %} checked {% endif %}>
         <label for="not_bought">Not Bought</label>
         <input class="w3-button w3-indigo w3-round-xxlarge w3-hover-green w3-margin-left" type="submit" value="Filter">
     </form>
@@ -63,13 +57,13 @@
 <section id="list-container" class="w3-container w3-row">
     {% for item in items %}
     <ul class="w3-ul w3-card-4 w3-round-xxlarge w3-col m2 l4 w3-animate-zoom" style="width:50%">
-            {% if request.args.get('option') == 'bought_only' and item.bought %}
-            {% include 'list.html' %}
-            {% elif request.args.get('option') == 'not_bought' and item.bought == False %}
-            {% include 'list.html' %}
-            {% elif request.args.get('option') == 'all' or request.args.get('option') == None %}
-            {% include 'list.html' %}
-            {% endif %}
+        {% if request.args.get('option') == 'bought_only' and item.bought %}
+        {% include 'list.html' %}
+        {% elif request.args.get('option') == 'not_bought' and item.bought == False %}
+        {% include 'list.html' %}
+        {% elif request.args.get('option') == 'all' or request.args.get('option') == None %}
+        {% include 'list.html' %}
+        {% endif %}
     </ul>
     {% endfor %}
 </section>

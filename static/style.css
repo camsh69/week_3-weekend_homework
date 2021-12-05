@@ -1,0 +1,18 @@
+.discount {
+    color: red;
+    font-size: x-small;
+    font-style: italic;
+}
+
+h1 {
+    text-align: center;
+}
+
+.add_item_button {
+    width: 50%;
+    margin: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
