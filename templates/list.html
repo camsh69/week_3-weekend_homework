@@ -1,0 +1,16 @@
+<li>
+<header class="w3-container w3-blue w3-animate-zoom w3-round-xxlarge">
+    <h3>{{item.name_of_item}}</h3>
+</header>
+<br>Price: £{{"{:.2f}".format(item.price)}}
+<br>Quantity: {{item.quantity}}
+{% if item.quantity >= 5 %}
+<small><i style="color: red;">eligible for 10% discount</i></small>
+{% endif %}
+<br>Bought?:
+{% if item.bought %}
+<span>&#9989;</span>
+{% else %}
+<span>No</span>
+{% endif %}
+</li>

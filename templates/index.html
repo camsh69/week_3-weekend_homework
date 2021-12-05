@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="w3-container w3-teal" style="text-align: center;">My Shopping List</h1>
 
-<div id="form-container" class="w3-row-padding">
+<section id="form-container" class="w3-row-padding">
     <form action="/shoppinglist" method="post">
         <div class="w3-half">
             <label for="name_of_item">Item Name: </label>
@@ -24,54 +23,55 @@
             <input class="w3-check" type="checkbox" name="bought" id="bought" value="False">
         </div>
         <p>
-            <input class="w3-button w3-block w3-round-xxlarge w3-indigo w3-hover-green" type="submit" value="Add Item">
+            <input class="w3-button w3-block w3-round-xxlarge w3-indigo w3-hover-green" style="width:50%; margin: auto;"
+                type="submit" value="Add Item">
         </p>
     </form>
     <hr>
-</div>
+</section>
 
-<div id='totals-container' class="w3-container">
+<section id='totals-container' class="w3-container">
     <div>
         Total items: <b>{{ total_items }}</b>
     </div>
     <div class="w3-margin-bottom">
         Total price: <b>£{{ total_price }}</b>
     </div>
-</div>
+</section>
 
-<div id='filter-container' class="w3-container w3-margin-bottom">
-    <form action="/shoppinglist" method="post">
-        <input class="w3-radio" type="radio" name="options" id="all" value="all" checked>
+<section id='filter-container' class="w3-container w3-margin-bottom">
+    <form action="/shoppinglist" method="get">
+        <input class="w3-radio" type="radio" name="option" id="all" value="all"
+        {% if request.args.get('option') == 'all' or None %}
+          checked  
+        {% endif %}>
         <label for="all">All</label>
-        <input class="w3-radio" type="radio" name="options" id="bought_only" value="bought_only">
+        <input class="w3-radio" type="radio" name="option" id="bought_only" value="bought_only"
+        {% if request.args.get('option') == 'bought_only' %}
+          checked  
+        {% endif %}>
         <label for="bought_only">Bought Only</label>
-        <input class="w3-radio" type="radio" name="options" id="not_bought" value="not_bought">
+        <input class="w3-radio" type="radio" name="option" id="not_bought" value="not_bought"
+        {% if request.args.get('option') == 'not_bought' %}
+          checked  
+        {% endif %}>
         <label for="not_bought">Not Bought</label>
         <input class="w3-button w3-indigo w3-round-xxlarge w3-hover-green w3-margin-left" type="submit" value="Filter">
     </form>
-</div>
+</section>
 
-<div id="list-container" class="w3-container w3-row">
+<section id="list-container" class="w3-container w3-row">
     {% for item in items %}
     <ul class="w3-ul w3-card-4 w3-round-xxlarge w3-col m2 l4 w3-animate-zoom" style="width:50%">
-        <li>
-            <header class="w3-container w3-blue w3-animate-zoom w3-round-xxlarge" >
-                <h3>{{item.name_of_item}}</h3>
-            </header>
-            <br>Price: £{{"{:.2f}".format(item.price)}}
-            <br>Quantity: {{item.quantity}}
-            {% if item.quantity >= 5 %}
-            <small><i style="color: red;">eligible for 10% discount</i></small>
+            {% if request.args.get('option') == 'bought_only' and item.bought %}
+            {% include 'list.html' %}
+            {% elif request.args.get('option') == 'not_bought' and item.bought == False %}
+            {% include 'list.html' %}
+            {% elif request.args.get('option') == 'all' or request.args.get('option') == None %}
+            {% include 'list.html' %}
             {% endif %}
-            <br>Bought?:
-            {% if item.bought %}
-            <span>&#9989;</span>
-            {% else %}
-            <span>No</span>
-            {% endif %}
-        </li>
     </ul>
     {% endfor %}
-</div>
+</section>
 
-{% endblock  %}
+{% endblock content %}
