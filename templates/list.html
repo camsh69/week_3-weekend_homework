@@ -1,16 +1,30 @@
 <li>
-<header class="w3-container w3-blue w3-animate-zoom w3-round-xxlarge">
-    <h3>{{item.name_of_item}}</h3>
-</header>
-<br>Price: £{{"{:.2f}".format(item.price)}}
-<br>Quantity: {{item.quantity}}
-{% if item.quantity >= 5 %}
-<span class="discount">10% discount</span>
-{% endif %}
-<br>Bought?:
-{% if item.bought %}
-<span>&#9989;</span>
-{% else %}
-<span>No</span>
-{% endif %}
+    <header class="w3-container w3-blue w3-animate-zoom w3-round-xxlarge">
+        <h3>{{item.name_of_item}}</h3>
+    </header>
+    <br>Price: £{{"{:.2f}".format(item.price)}}
+    <br>Quantity: {{item.quantity}}
+    {% if item.quantity >= 5 %}
+    <span class="discount">10% discount</span>
+    {% endif %}
+    <br>Bought?:
+    {% if item.bought %}
+    <span>&#9989;</span>
+    {% else %}
+    <span>No</span>
+    {% endif %}
+    <div class="button_group">
+        {% if item.bought == False %}
+        <form action="/shoppinglist/buy/" method="post">
+            <input type="hidden" name="name_of_item" id="name_of_item" value="{{item.name_of_item}}">
+            <input class="w3-button w3-indigo w3-round-xxlarge w3-hover-green w3-margin-top w3-margin-right"
+                type="submit" value="Buy">
+        </form>
+        {% endif %}
+        <form action="/shoppinglist/delete/" method="post">
+            <input type="hidden" name="name_of_item" id="name_of_item" value="{{item.name_of_item}}">
+            <input class="w3-button w3-indigo w3-round-xxlarge w3-hover-green w3-margin-top" type="submit"
+                value="Delete">
+        </form>
+    </div>
 </li>

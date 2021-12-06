@@ -1,6 +1,6 @@
 .discount {
     color: red;
-    font-size: x-small;
+    font-size: small;
     font-style: italic;
 }
 
@@ -15,4 +15,8 @@ h1 {
 
 .bold {
     font-weight: bold;
+}
+
+.button_group {
+    display: flex;
 }
